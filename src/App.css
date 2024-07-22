@@ -1,0 +1,38 @@
+/* App.jsx CSS */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* General button styling
+
+/* App container styling for center alignment */
+.App {
+    display: flex;
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
+    height: 100vh;
+    /* Full viewport height */
+}
+
+/* Fixed size container for the chart */
+.chart-container {
+    width: 600px;
+    /* Maintain fixed width */
+    height: 400px;
+    /* Maintain fixed height */
+    /* Consider adding box-shadow or border for better visual separation */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Optional: Adds subtle shadow for depth */
+    /* Additional responsive adjustments can be made here */
+}
