@@ -12,7 +12,8 @@ import {
   TimeScale
 } from 'chart.js';
 // import 'chartjs-adapter-date-fns'
-import 'chartjs-adapter-moment'
+import 'chartjs-adapter-moment';
+
 
 ChartJS.register(
   CategoryScale,
@@ -50,8 +51,12 @@ const TimeSeriesChart = ({ data }) => {
       }
     ]
   };
-
-  return <Line options={options} data={chartData} />;
+  
+  return (
+    <div className="chart-container">
+      <Line options={options} data={chartData} />
+    </div>
+  );
 };
 
 export default TimeSeriesChart;
