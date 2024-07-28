@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; 
 import axios from 'axios'; 
-import { useNavigate } from 'react-router-dom'; // Import useHistory hook 
+import { useNavigate } from 'react-router-dom'; 
 import { 
 	MDBContainer, 
 	MDBInput, 
@@ -12,12 +12,12 @@ function SignupPage() {
 	const [password, setPassword] = useState(''); 
 	const [confirmPassword, setConfirmPassword] = useState(''); 
 	const [role, setRole] = useState('ROLE_CUSTOMER');  
-	const [error, setError] = useState(''); // State to manage error messages 
-	const history = useNavigate(); // Get the history object for redirection 
+	const [error, setError] = useState('');
+	const history = useNavigate();
 
 	const handleSignup = async () => { 
 		try { 
-			// Check for empty fields 
+			
 			if (!email || !password || !confirmPassword) { 
 				setError('Please fill in all fields.'); 
 				return; 
@@ -32,48 +32,39 @@ function SignupPage() {
 				password, 
 				role 
 			}); 
-			// Handle successful signup 
 			console.log(response.data); 
 			history('/login'); 
 		} catch (error) { 
-			// Handle signup error 
 			console.error('Signup failed:', error.response ? error.response.data : error.message); 
 			setError(error.response ? error.response.data : error.message); 
 		} 
 	}; 
 
 	return ( 
-		<div className="d-flex justify-content-center align-items-center vh-100"> 
-			<div className="border rounded-lg p-4" style={{width: '600px', height: 'auto'}}> 
-				<MDBContainer className="p-3"> 
-					<h2 className="mb-4 text-center">Sign Up Page</h2> 
-					{   /* Display error message */ } 
-					{error && <p className="text-danger">{error}</p>} 
-					<MDBInput wrapperClass='mb-3' placeholder='Email Address' id='email' value={email} type='email'
-							onChange={(e) => setEmail(e.target.value)}/> 
-					<MDBInput wrapperClass='mb-3' placeholder='Password' id='password' type='password' value={password} 
-							onChange={(e) => setPassword(e.target.value)}/> 
-					<MDBInput wrapperClass='mb-3' placeholder='Confirm Password' id='confirmPassword' type='password'
-							value={confirmPassword} 
-							onChange={(e) => setConfirmPassword(e.target.value)}/> 
-
-					<label className="form-label mb-1">Role:</label> 
-					<select className="form-select mb-4" value={role} onChange={(e) => setRole(e.target.value)}> 
-						<option value="ROLE_USER">User</option> 
-						<option value="ROLE_ADMIN">Admin</option> 
-					</select> 
-					<button className="mb-4 d-block mx-auto fixed-action-btn btn-primary"
-							style={{height: '40px', width: '100%'}} 
-							onClick={handleSignup}>Sign Up 
-					</button> 
-
-					<div className="text-center"> 
-						<p>Already Register? <a href="/login">Login</a></p> 
-					</div> 
-
-				</MDBContainer> 
-			</div> 
-		</div> 
+		<div className="auth-container">
+			<div className="auth-box">
+				<MDBContainer className="p-3">
+					<h2 className="auth-title">Sign Up</h2>
+					{error && <p className="text-danger">{error}</p>}
+					<MDBInput className="auth-input" placeholder='Email Address' id='email' value={email} type='email'
+						onChange={(e) => setEmail(e.target.value)} />
+					<MDBInput className="auth-input" placeholder='Password' id='password' type='password' value={password}
+						onChange={(e) => setPassword(e.target.value)} />
+					<MDBInput className="auth-input" placeholder='Confirm Password' id='confirmPassword' type='password'
+						value={confirmPassword}
+						onChange={(e) => setConfirmPassword(e.target.value)} />
+					<label className="form-label mb-1">Role:</label>
+					<select className="form-select mb-4" value={role} onChange={(e) => setRole(e.target.value)}>
+						<option value="ROLE_USER">User</option>
+						<option value="ROLE_ADMIN">Admin</option>
+					</select>
+					<button className="auth-button btn-primary" onClick={handleSignup}>Sign Up</button>
+					<div className="auth-link">
+						<p>Already Register? <a href="/login">Login</a></p>
+					</div>
+				</MDBContainer>
+			</div>
+		</div>
 	); 
 } 
 
