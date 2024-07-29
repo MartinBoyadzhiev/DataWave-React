@@ -7,8 +7,12 @@ import Data from './pages/Data';
 import SignupPage from './pages/SignUp';
 import LoginPage from './pages/Login';
 import Navigation from './components/Navigation';
+import Admin from './pages/Admin';
 
 function App() {
+	// FIXME: Implement login status check
+	const isAdmin = localStorage.getItem('isAdmin');
+
 	return (
 		<Router>
 			<Navigation />
@@ -17,6 +21,7 @@ function App() {
 				<Route path="/data" element={<Data />} />
 				<Route path="/signup" element={<SignupPage />} />
 				<Route path="/login" element={<LoginPage />} />
+				{isAdmin && <Route path="/admin" element={<Admin />} />}
 			</Routes>
 		</Router>
 	);

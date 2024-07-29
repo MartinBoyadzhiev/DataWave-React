@@ -20,8 +20,9 @@ function LoginPage() {
 			} 
 
 			const response = await axios.post('http://localhost:8080/auth/signin', { email, password }); 
-			const {jwt} = response.data;
+			const {jwt, admin} = response.data;
 			localStorage.setItem('jwtToken', jwt);
+			localStorage.setItem('isAdmin', admin);
 			console.log('Login successful:', response.data); 
 			window.dispatchEvent(new Event('loginStatusChanged'));
 

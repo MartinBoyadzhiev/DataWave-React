@@ -4,15 +4,18 @@ import NavLink from './NavLink';
 
 function Navigation() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('jwtToken');
         setIsLoggedIn(!!token);
+        setIsAdmin(JSON.parse(localStorage.getItem('isAdmin')));
 
         const handleLoginStatusChange = () => {
             const token = localStorage.getItem('jwtToken');
             setIsLoggedIn(!!token);
+            setIsAdmin(JSON.parse(localStorage.getItem('isAdmin')));
         };
 
         window.addEventListener('loginStatusChanged', handleLoginStatusChange);
@@ -24,7 +27,9 @@ function Navigation() {
 
     const handleLogout = () => {
         localStorage.removeItem('jwtToken');
+        localStorage.removeItem('isAdmin');
         setIsLoggedIn(false);
+        setIsAdmin(false);
         navigate('/');
     };
 
@@ -35,6 +40,7 @@ function Navigation() {
                 <NavLink to="/data">Data</NavLink>
                 {!isLoggedIn && <NavLink to="/signup">Sign Up</NavLink>}
                 {!isLoggedIn && <NavLink to="/login">Login</NavLink>}
+                {isAdmin && <NavLink to="/admin">Admin</NavLink>}
                 {isLoggedIn && (
                     <li>
                         <button className="logout-button" onClick={handleLogout}>Logout</button>
