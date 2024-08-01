@@ -44,8 +44,15 @@ const CreateMetric = () => {
       primaryKeys
     };
 
+
+    const token = localStorage.getItem('jwtToken');
+
     try {
-      const response = await axios.post('http://localhost:8080/metric/create', metricData);
+      const response = await axios.post('http://localhost:8080/metric/create', metricData , {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       console.log('Metric created:', response.data);
     } catch (error) {
       console.error('Error creating metric:', error);

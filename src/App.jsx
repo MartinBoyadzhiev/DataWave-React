@@ -1,30 +1,36 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css';
-
+import Navigation from './components/Navigation';
 import Home from './pages/Home';
 import Data from './pages/Data';
 import SignupPage from './pages/SignUp';
 import LoginPage from './pages/Login';
-import Navigation from './components/Navigation';
 import Admin from './pages/Admin';
+import './App.css';
 
 function App() {
-	// FIXME: Implement login status check
-	const isAdmin = localStorage.getItem('isAdmin');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
-	return (
-		<Router>
-			<Navigation />
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/data" element={<Data />} />
-				<Route path="/signup" element={<SignupPage />} />
-				<Route path="/login" element={<LoginPage />} />
-				{isAdmin && <Route path="/admin" element={<Admin />} />}
-			</Routes>
-		</Router>
-	);
+    useEffect(() => {
+        const token = localStorage.getItem('jwtToken');
+        const loggedIn = !!token;
+        setIsLoggedIn(loggedIn);
+        setIsAdmin(JSON.parse(localStorage.getItem('isAdmin')));
+    }, []);
+
+    return (
+        <Router>
+            <Navigation setIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
+            <Routes>
+                <Route path="/" element={<Home isLoggedIn={isLoggedIn} isAdmin={isAdmin} />} />
+                <Route path="/data" element={<Data />} />
+                <Route path="/signup" element={<SignupPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                {isAdmin && <Route path="/admin" element={<Admin />} />}
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;
