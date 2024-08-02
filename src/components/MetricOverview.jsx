@@ -73,12 +73,14 @@ const MetricsOverview = ({isAdmin}) => {
                 <div key={index} className="metric-item">
                     <h4>{metric.metricName}</h4>
                     <ul>
-                        {metric.columns.map((column, idx) => (
-                            <li key={idx}>{column}</li>
+                        {Object.entries(metric.columns).map(([columnName, columnType], idx) => (
+                            <li key={idx}>{`${columnName}: ${columnType}`}</li>
                         ))}
                     </ul>
                     <button className="display-button" onClick={() => handleDisplayData(metric.metricName)}>Display</button>
-                    <button className="delete-button" onClick={() => confirmDeleteMetric(metric.metricName)}>Delete</button>
+                    {isAdmin && (
+                        <button className="delete-button" onClick={() => confirmDeleteMetric(metric.metricName)}>Delete</button>
+                    )}
                 </div>
             ))}
             {showConfirmDialog && (
