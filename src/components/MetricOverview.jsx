@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './MetricOverview.css';
+import ConfirmationDialog from './ConfirmationDialog';
 
 const MetricsOverview = ({isAdmin}) => {
     const [metrics, setMetrics] = useState([]);
+    const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+    const [metricToDelete, setMetricToDelete] = useState(null);
 
     useEffect(() => {
         fetchMetrics();
@@ -46,6 +49,24 @@ const MetricsOverview = ({isAdmin}) => {
         }
     };
 
+    const confirmDeleteMetric = (metricName) => {
+        setMetricToDelete(metricName);
+        setShowConfirmDialog(true);
+    }
+
+    const handleConfirmDelete = () => {
+        if (metricToDelete) {
+            handleDeleteMetric(metricToDelete);
+        }
+        setShowConfirmDialog(false);
+        setMetricToDelete(null);
+    };
+
+    const handleCancelDelete = () => {
+        setShowConfirmDialog(false);
+        setMetricToDelete(null);
+    };
+
     return (
         <div className="metric-overview-container">
             {metrics.map((metric, index) => (
@@ -56,12 +77,17 @@ const MetricsOverview = ({isAdmin}) => {
                             <li key={idx}>{column}</li>
                         ))}
                     </ul>
-                    <button className='display-button' onClick={() => handleDisplayData(metric.metricName)}>Display</button>
-                    {isAdmin && (
-                        <button className='delete-button' onClick={() => handleDeleteMetric(metric.metricName)}>Delete</button>
-                    )}
+                    <button className="display-button" onClick={() => handleDisplayData(metric.metricName)}>Display</button>
+                    <button className="delete-button" onClick={() => confirmDeleteMetric(metric.metricName)}>Delete</button>
                 </div>
             ))}
+            {showConfirmDialog && (
+                <ConfirmationDialog
+                    message={`Are you sure you want to delete the metric "${metricToDelete}"?`}
+                    onConfirm={handleConfirmDelete}
+                    onCancel={handleCancelDelete}
+                />
+            )}
         </div>
     );
 };

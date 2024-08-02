@@ -1,10 +1,11 @@
-// src/components/Navigation.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavLink from './NavLink';
+import ConfirmationDialog from './ConfirmationDialog';
 
 function Navigation({ setIsLoggedIn, isAdmin, setIsAdmin }) {
     const [isLoggedIn, setIsLoggedInState] = useState(false);
+    const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,12 +31,21 @@ function Navigation({ setIsLoggedIn, isAdmin, setIsAdmin }) {
     }, [setIsLoggedIn, setIsAdmin]);
 
     const handleLogout = () => {
+        setShowConfirmDialog(true);
+    };
+
+    const confirmLogout = () => {
         localStorage.removeItem('jwtToken');
         localStorage.removeItem('isAdmin');
         setIsLoggedInState(false);
         setIsLoggedIn(false);
         setIsAdmin(false);
         navigate('/');
+        setShowConfirmDialog(false);
+    };
+
+    const cancelLogout = () => {
+        setShowConfirmDialog(false);
     };
 
     return (
@@ -52,6 +62,13 @@ function Navigation({ setIsLoggedIn, isAdmin, setIsAdmin }) {
                     </li>
                 )}
             </ul>
+            {showConfirmDialog && (
+                <ConfirmationDialog
+                    message="Are you sure you want to logout?"
+                    onConfirm={confirmLogout}
+                    onCancel={cancelLogout}
+                />
+            )}
         </nav>
     );
 }
