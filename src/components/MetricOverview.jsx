@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './MetricOverview.css';
 import ConfirmationDialog from './ConfirmationDialog';
+import { useNavigate } from 'react-router-dom';
 
 const MetricsOverview = ({isAdmin}) => {
+    const navigate = useNavigate();
     const [metrics, setMetrics] = useState([]);
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const [metricToDelete, setMetricToDelete] = useState(null);
@@ -29,6 +31,10 @@ const MetricsOverview = ({isAdmin}) => {
     const handleDisplayData = (metricName) => {
         console.log(`Display data for ${metricName}`);
         // Add your logic to display data for the metric
+    };
+
+    const handleInsertData = (metric) => {
+        navigate(`/admin/insert`, { state: { metric } });
     };
 
     const handleDeleteMetric = async (metricName) => {
@@ -79,8 +85,11 @@ const MetricsOverview = ({isAdmin}) => {
                     </ul>
                     <button className="display-button" onClick={() => handleDisplayData(metric.metricName)}>Display</button>
                     {isAdmin && (
-                        <button className="delete-button" onClick={() => confirmDeleteMetric(metric.metricName)}>Delete</button>
-                    )}
+                        <>
+                            <button className="insert-button" onClick={() => handleInsertData(metric)}>Insert data</button>
+                            <button className="delete-button" onClick={() => confirmDeleteMetric(metric.metricName)}>Delete</button>
+                        </>
+                        )}
                 </div>
             ))}
             {showConfirmDialog && (

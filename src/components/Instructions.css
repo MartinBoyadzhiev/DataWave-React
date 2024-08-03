@@ -1,0 +1,27 @@
+.instructions-container {
+  padding: 20px;
+  background-color: #e9ecef;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  width: 25%; /* Adjust the width as needed */
+  float: left; /* Float the instructions to the left */
+  margin-right: 20px; /* Add some space to the right */
+}
+
+.instructions-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #007bff;
+}
+
+.instructions-container ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+.instructions-container li {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #495057;
+}

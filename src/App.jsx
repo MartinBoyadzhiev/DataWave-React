@@ -7,6 +7,7 @@ import SignupPage from './pages/SignUp';
 import LoginPage from './pages/Login';
 import Admin from './pages/Admin';
 import './App.css';
+import InsertData from './pages/InsertData';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 {isAdmin && <Route path="/admin" element={<Admin />} />}
+                <Route path="/admin/insert" element={<InsertData />} />
             </Routes>
         </Router>
     );
