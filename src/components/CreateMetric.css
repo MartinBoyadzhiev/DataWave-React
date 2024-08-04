@@ -44,19 +44,14 @@
   margin-bottom: 10px;
 }
 
-.custom-columns {
-  margin-bottom: 20px;
-}
 
 .custom-columns > div {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .custom-columns input[type="text"] {
   flex: 1;
-  margin-right: 10px;
 }
 
 .custom-columns .remove-button {
@@ -74,11 +69,10 @@
 .custom-columns .remove-button:hover {
   background-color: #cc0000;
 }
-.custom-columns label {
-  margin-bottom: 30px;
-}
+
 #metricName {
-    margin-top: 15px;
+  width: 95%;
+  margin-top: 15px;
 }
 
 .basic-button {
@@ -91,7 +85,7 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-right: 10px;
+  
 }
 
 .basic-button:hover {
@@ -113,11 +107,10 @@
 .primary-keys-container label {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  
 }
 
 .primary-keys-container input[type="checkbox"] {
-  margin-right: 10px;
   cursor: pointer;
 }
 

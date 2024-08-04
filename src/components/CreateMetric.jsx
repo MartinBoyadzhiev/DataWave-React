@@ -116,7 +116,7 @@ const CreateMetric = () => {
             <div className="form-container" key={index} >
               <input
                 type="text"
-                placeholder="Column Name"
+                placeholder="Name"
                 value={column.name}
                 onChange={(e) => handleColumnChange(index, 'name', e.target.value)}
                 required

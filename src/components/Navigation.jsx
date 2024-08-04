@@ -52,7 +52,6 @@ function Navigation({ setIsLoggedIn, isAdmin, setIsAdmin }) {
         <nav className="navbar">
             <ul className="nav-list">
                 <NavLink to="/">Home</NavLink>
-                <NavLink to="/data">Data</NavLink>
                 {!isLoggedIn && <NavLink to="/signup">Sign Up</NavLink>}
                 {!isLoggedIn && <NavLink to="/login">Login</NavLink>}
                 {isAdmin && <NavLink to="/admin">Admin</NavLink>}

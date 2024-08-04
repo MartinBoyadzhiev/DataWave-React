@@ -3,9 +3,11 @@ import axios from 'axios';
 import './MetricOverview.css';
 import ConfirmationDialog from './ConfirmationDialog';
 import { useNavigate } from 'react-router-dom';
+import { useAccessControl } from '../context/AccessControllContext';
 
 const MetricsOverview = ({isAdmin}) => {
     const navigate = useNavigate();
+    const {setCanAccessData} = useAccessControl();
     const [metrics, setMetrics] = useState([]);
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const [metricToDelete, setMetricToDelete] = useState(null);
@@ -28,9 +30,22 @@ const MetricsOverview = ({isAdmin}) => {
         }
     };
 
-    const handleDisplayData = (metricName) => {
-        console.log(`Display data for ${metricName}`);
-        // Add your logic to display data for the metric
+    const handleDisplayData = async (metricName) => {
+        setCanAccessData(true);
+        try {
+            const token = localStorage.getItem('jwtToken');
+            await axios.put(`http://localhost:8080/metric/statistics`,null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                params: {
+                    metricName: metricName
+                }
+            });
+            navigate('/data');
+        } catch (error) {
+            console.error('Error fetching metrics:', error);
+        }
     };
 
     const handleInsertData = (metric) => {
