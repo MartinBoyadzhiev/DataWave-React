@@ -19,7 +19,12 @@ const InsertData = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        await axios.put('http://localhost:8080/metric/insert-data', { metricName: metric.metricName, csvData });
+        await axios.put('http://localhost:8080/metric/insert-data', { metricName: metric.metricName, csvData }, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+            'Content-Type': 'application/json',
+          },
+        });
         navigate('/admin');
       } catch (error) {
         console.error('Error inserting data:', error);

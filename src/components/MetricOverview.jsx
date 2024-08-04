@@ -42,7 +42,7 @@ const MetricsOverview = ({isAdmin}) => {
                     metricName: metricName
                 }
             });
-            navigate('/data');
+            navigate(`/data?metricName=${metricName}`);
         } catch (error) {
             console.error('Error fetching metrics:', error);
         }
