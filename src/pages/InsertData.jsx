@@ -3,12 +3,14 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Instructions from '../components/Instructions';
 import axios from 'axios';
 import './InsertData.css';
-
+import ErrorPopUp from '../components/ErrorPopUp';
 
 const InsertData = () => {
   const location = useLocation();
   const { metric } = location.state || {};
   const [csvData, setCsvData] = useState('');
+  const [error, setError] = useState('');
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
   const navigate = useNavigate();
   
 
@@ -27,19 +29,21 @@ const InsertData = () => {
         });
         navigate('/admin');
       } catch (error) {
-        console.error('Error inserting data:', error);
+        setError(error.response ? error.response.data.message : 'An error occurred');
+        setShowErrorPopup(true);
       }
   };
 
+  const handleClosePopup = () => {
+    setShowErrorPopup(false);
+  };
 
   return (
     <div>
     <h1 className='insert-data-h1'>Insert Data</h1>
     <div className="insert-data-container">
-    
       <Instructions />
       <div className="content-container">
-
         {metric && (
           <div className="metric-reference">
             <h2>Metric: {metric.metricName}</h2>
@@ -63,6 +67,7 @@ const InsertData = () => {
         </form>
       </div>
     </div>
+    {showErrorPopup && <ErrorPopUp message={error} onClose={handleClosePopup} />}
     </div>
   );
 };

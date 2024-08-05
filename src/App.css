@@ -274,4 +274,19 @@ html, body {
     margin-bottom: 15px;
 }
 
+/* src/pages/Data.css */
+.insert-button-data {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #33b864;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 5px;
+}
 
+.insert-button-data:hover {
+  background-color: #28924f;
+}

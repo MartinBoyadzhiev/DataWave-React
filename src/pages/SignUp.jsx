@@ -31,12 +31,15 @@ function SignupPage() {
 				email, 
 				password, 
 				role 
-			}); 
-			console.log(response.data); 
+			});  
 			history('/login'); 
 		} catch (error) { 
-			console.error('Signup failed:', error.response ? error.response.data : error.message); 
-			setError(error.response ? error.response.data : error.message); 
+			if (error.response && error.response.status === 409) {
+				setError(error.response.data.message);
+			} else {
+				console.error('Signup failed:', error.response ? error.response.data : error.message); 
+				setError(error.response ? error.response.data : error.message); 
+			} 
 		} 
 	}; 
 

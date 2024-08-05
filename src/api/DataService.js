@@ -13,9 +13,10 @@ export async function fetchTimeSeriesData(metricName) {
     });
 }
 
-export async function fetchColumnNames() {
+export async function fetchColumnNames(metricName) {
+    const API_URL = `http://localhost:8080/metric/${metricName}/columns`;
     const token = localStorage.getItem('jwtToken');
-    return await axios.get(COLUMN_NAME_URL, {
+    return await axios.get(API_URL, {
         headers: {
             Authorization: `Bearer ${token}`
         }

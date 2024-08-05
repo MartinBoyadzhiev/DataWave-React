@@ -4,6 +4,7 @@ import './MetricOverview.css';
 import ConfirmationDialog from './ConfirmationDialog';
 import { useNavigate } from 'react-router-dom';
 import { useAccessControl } from '../context/AccessControllContext';
+import ErrorPopUp from '../components/ErrorPopUp';
 
 const MetricsOverview = ({isAdmin}) => {
     const navigate = useNavigate();
@@ -11,6 +12,7 @@ const MetricsOverview = ({isAdmin}) => {
     const [metrics, setMetrics] = useState([]);
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const [metricToDelete, setMetricToDelete] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         fetchMetrics();
@@ -26,11 +28,11 @@ const MetricsOverview = ({isAdmin}) => {
             });
             setMetrics(response.data);
         } catch (error) {
-            console.error('Error fetching metrics:', error);
+            setErrorMessage(error.response.data.message);
         }
     };
 
-    const handleDisplayData = async (metricName) => {
+    const handleDisplayData = async (metric) => {
         setCanAccessData(true);
         try {
             const token = localStorage.getItem('jwtToken');
@@ -39,12 +41,12 @@ const MetricsOverview = ({isAdmin}) => {
                     Authorization: `Bearer ${token}`
                 },
                 params: {
-                    metricName: metricName
+                    metricName: metric.metricName
                 }
             });
-            navigate(`/data?metricName=${metricName}`);
+            navigate(`/data`, { state: { metric } });
         } catch (error) {
-            console.error('Error fetching metrics:', error);
+            setErrorMessage(error.response.data.message);
         }
     };
 
@@ -63,11 +65,14 @@ const MetricsOverview = ({isAdmin}) => {
                     metricName: metricName
                 }
             });
-            // Update the state to remove the deleted metric
             setMetrics(metrics.filter(metric => metric.metricName !== metricName));
         } catch (error) {
-            console.error('Error deleting metric:', error);
+            setErrorMessage(error.response.data.message);
         }
+    };
+
+    const handleCloseErrorPopup = () => {
+        setErrorMessage('');
     };
 
     const confirmDeleteMetric = (metricName) => {
@@ -98,7 +103,7 @@ const MetricsOverview = ({isAdmin}) => {
                             <li key={idx}>{`${columnName}: ${columnType}`}</li>
                         ))}
                     </ul>
-                    <button className="display-button" onClick={() => handleDisplayData(metric.metricName)}>Display</button>
+                    <button className="display-button" onClick={() => handleDisplayData(metric)}>Display</button>
                     {isAdmin && (
                         <>
                             <button className="insert-button" onClick={() => handleInsertData(metric)}>Insert data</button>
@@ -114,6 +119,7 @@ const MetricsOverview = ({isAdmin}) => {
                     onCancel={handleCancelDelete}
                 />
             )}
+            {errorMessage && <ErrorPopUp message={errorMessage} onClose={handleCloseErrorPopup} />}
         </div>
     );
 };
