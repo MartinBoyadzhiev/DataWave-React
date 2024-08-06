@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavLink from './NavLink';
 import ConfirmationDialog from './ConfirmationDialog';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from './LanguageSwitcher';
 
 function Navigation({ setIsLoggedIn, isAdmin, setIsAdmin }) {
     const [isLoggedIn, setIsLoggedInState] = useState(false);
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const navigate = useNavigate();
+    const { t} = useTranslation();
 
     useEffect(() => {
         const token = localStorage.getItem('jwtToken');
@@ -51,19 +54,26 @@ function Navigation({ setIsLoggedIn, isAdmin, setIsAdmin }) {
     return (
         <nav className="navbar">
             <ul className="nav-list">
-                <NavLink to="/">Home</NavLink>
-                {!isLoggedIn && <NavLink to="/signup">Sign Up</NavLink>}
-                {!isLoggedIn && <NavLink to="/login">Login</NavLink>}
-                {isAdmin && <NavLink to="/admin">Admin</NavLink>}
-                {isLoggedIn && (
-                    <li>
-                        <button className="logout-button" onClick={handleLogout}>Logout</button>
-                    </li>
-                )}
+                <NavLink to="/">{t('home')}</NavLink>
+                {!isLoggedIn && <NavLink to="/signup">{t('signUp')}</NavLink>}
+                {!isLoggedIn && <NavLink to="/login">{t('login')}</NavLink>}
+                {isAdmin && <NavLink to="/admin">{t('admin')}</NavLink>}
+
+                
+                
+                
+                
+                
             </ul>
+            <div className='test'>
+            {isLoggedIn && (
+                        <button className="logout-button" onClick={handleLogout}>{t('logout')}</button>
+                )}
+                <LanguageSwitcher />
+                </div>
             {showConfirmDialog && (
                 <ConfirmationDialog
-                    message="Are you sure you want to logout?"
+                    message={t('logoutQ')}
                     onConfirm={confirmLogout}
                     onCancel={cancelLogout}
                 />

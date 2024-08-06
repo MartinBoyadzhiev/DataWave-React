@@ -5,6 +5,8 @@ import ConfirmationDialog from './ConfirmationDialog';
 import { useNavigate } from 'react-router-dom';
 import { useAccessControl } from '../context/AccessControllContext';
 import ErrorPopUp from '../components/ErrorPopUp';
+import { useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 
 const MetricsOverview = ({isAdmin}) => {
     const navigate = useNavigate();
@@ -13,6 +15,7 @@ const MetricsOverview = ({isAdmin}) => {
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const [metricToDelete, setMetricToDelete] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const { t } = useTranslation();
 
     useEffect(() => {
         fetchMetrics();
@@ -103,18 +106,18 @@ const MetricsOverview = ({isAdmin}) => {
                             <li key={idx}>{`${columnName}: ${columnType}`}</li>
                         ))}
                     </ul>
-                    <button className="display-button" onClick={() => handleDisplayData(metric)}>Display</button>
+                    <button className="display-button" onClick={() => handleDisplayData(metric)}>{t('display')}</button>
                     {isAdmin && (
                         <>
-                            <button className="insert-button" onClick={() => handleInsertData(metric)}>Insert data</button>
-                            <button className="delete-button" onClick={() => confirmDeleteMetric(metric.metricName)}>Delete</button>
+                            <button className="insert-button" onClick={() => handleInsertData(metric)}>{t('insert')}</button>
+                            <button className="delete-button" onClick={() => confirmDeleteMetric(metric.metricName)}>{t('delete')}</button>
                         </>
                         )}
                 </div>
             ))}
             {showConfirmDialog && (
                 <ConfirmationDialog
-                    message={`Are you sure you want to delete the metric "${metricToDelete}"?`}
+                    message= {<Trans i18nKey="deleteMetricConfirmation" values={{ metricName: metricToDelete }} />}
                     onConfirm={handleConfirmDelete}
                     onCancel={handleCancelDelete}
                 />

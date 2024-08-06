@@ -1,0 +1,33 @@
+.language-switcher select {
+  padding: 10px 10px; /* Adjusted padding for better spacing */
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #007bff; /* Blue background color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s; /* Added box-shadow transition */
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.language-switcher select:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added box-shadow on hover */
+}
+
+.language-switcher select:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Added focus effect */
+}
+
+.language-switcher option {
+  background-color: #ffffff; /* White background for options */
+  color: #000000; /* Black text color */
+  font-weight: bold;
+}
+
+.language-switcher select option:hover {
+  background-color: #e9ecef; /* Light gray background on hover for options */
+}

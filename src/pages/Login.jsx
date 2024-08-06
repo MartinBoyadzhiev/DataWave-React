@@ -5,12 +5,14 @@ import {
 	MDBContainer, 
 	MDBInput
 } from 'mdb-react-ui-kit'; 
+import { useTranslation } from 'react-i18next';
 
 function LoginPage() { 
 	const [email, setEmail] = useState(''); 
 	const [password, setPassword] = useState(''); 
 	const [error, setError] = useState(''); 
 	const history = useNavigate(); 
+	const { t } = useTranslation();
 
 	const handleLogin = async () => { 
 		try { 
@@ -37,13 +39,13 @@ function LoginPage() {
 		<div className="auth-container"> 
 			<div className="auth-box"> 
 				<MDBContainer className="p-3"> 
-					<h2 className="auth-title">Login</h2> 
-					<MDBInput className="auth-input" placeholder='Email address' id='email' value={email} type='email' onChange={(e) => setEmail(e.target.value)} /> 
-					<MDBInput className="auth-input" placeholder='Password' id='password' type='password' value={password} onChange={(e) => setPassword(e.target.value)} /> 
+					<h2 className="auth-title">{t('login')}</h2> 
+					<MDBInput className="auth-input" placeholder={t('email')} id='email' value={email} type='email' onChange={(e) => setEmail(e.target.value)} /> 
+					<MDBInput className="auth-input" placeholder={t('password')} id='password' type='password' value={password} onChange={(e) => setPassword(e.target.value)} /> 
 					{error && <p className="text-danger">{error}</p>} 
-					<button className="auth-button btn-primary" onClick={handleLogin}>Sign in</button> 
+					<button className="auth-button btn-primary" onClick={handleLogin}>{t('loginButton')}</button> 
 					<div className="auth-link"> 
-						<p>Not a member? <a href="/signup">Register</a></p> 
+						<p>{t('loginQ')} <a href="/signup">{t('registerButton')}</a></p> 
 					</div> 
 				</MDBContainer> 
 			</div> 

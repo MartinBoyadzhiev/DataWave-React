@@ -28,7 +28,7 @@ html, body {
 .nav-list li a {
     color: white;
     text-decoration: none;
-    font-size: 24px;
+    font-size: 30px;
     transition: color 0.3s ease;
 }
 
@@ -54,6 +54,11 @@ html, body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 600px;
 } */
+
+.test {
+    display: flex;
+    justify-content: right;
+}
 
 .create-metric-container form {
   width: 100%;

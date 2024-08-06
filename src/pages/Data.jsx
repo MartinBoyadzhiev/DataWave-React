@@ -4,6 +4,7 @@ import TimeSeriesChart from '../components/TimeSeriesChart';
 import '../components/TimeSeriesChart.css';
 import { fetchTimeSeriesData, fetchColumnNames } from '../api/DataService';
 import ColumnNames from '../components/Columns';
+import { useTranslation } from 'react-i18next';
 
 const Data = () => {
   const [data, setData] = useState([]);
@@ -12,6 +13,7 @@ const Data = () => {
   const { metric } = location.state || {};
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState(false);
+  const { t } = useTranslation(); 
 
   useEffect(() => {
     setIsAdmin(JSON.parse(localStorage.getItem('isAdmin')));
@@ -47,9 +49,9 @@ const Data = () => {
 	<div className="chart-container">
 	  <TimeSeriesChart data={data} />
 	  <ColumnNames columnNames={columnNames} />
-	  <button onClick={fetchData} className='fetch-button'>Fetch Data</button>
+	  <button onClick={fetchData} className='fetch-button'>{t('fetch')}</button>
 	  {isAdmin && (
-        <button onClick={handleInsertData} className='insert-button-data'>Insert Data</button>
+        <button onClick={handleInsertData} className='insert-button-data'>{t('insert')}</button>
       )}
 	</div>
   );

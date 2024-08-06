@@ -1,18 +1,21 @@
 import React from 'react';
 import './Instructions.css';
+import { useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 
 const Instructions = () => {
+  const { t } = useTranslation();
   return (
     <div className="instructions-container">
-      <h2>Instructions</h2>
+      <h2>{t('instructions')}</h2>
       <ul>
-        <li>Ensure that the CSV data is properly formatted</li>
-        <li>Each column should be separated by a comma</li>
-        <li>Column names should match the metric's column names exactly</li>
-        <li>Data types should be consistent with the metric's column types</li>
-        <li>Do not leave any required fields empty</li>
-        <li>Do not leave spaces between columns</li>
-        <li>Timestamp format must be text string such as <br />2007-12-03T10:15:30.00Z</li>
+        <li>{t('instruct1')}</li>
+        <li>{t('instruct2')}</li>
+        <li>{t('instruct3')}</li>
+        <li>{t('instruct4')}</li>
+        <li>{t('instruct5')}</li>
+        <li>{t('instruct6')}</li>
+        <li><Trans i18nKey='instruct7' components={{ 1: <br /> }} /></li>
       </ul>
     </div>
   );

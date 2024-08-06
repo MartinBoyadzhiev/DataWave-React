@@ -4,6 +4,8 @@ import Instructions from '../components/Instructions';
 import axios from 'axios';
 import './InsertData.css';
 import ErrorPopUp from '../components/ErrorPopUp';
+import { useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 
 const InsertData = () => {
   const location = useLocation();
@@ -12,6 +14,7 @@ const InsertData = () => {
   const [error, setError] = useState('');
   const [showErrorPopup, setShowErrorPopup] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
   
 
   const handleCsvChange = (e) => {
@@ -29,7 +32,7 @@ const InsertData = () => {
         });
         navigate('/admin');
       } catch (error) {
-        setError(error.response ? error.response.data.message : 'An error occurred');
+        setError(t('insertError'));
         setShowErrorPopup(true);
       }
   };
@@ -40,13 +43,13 @@ const InsertData = () => {
 
   return (
     <div>
-    <h1 className='insert-data-h1'>Insert Data</h1>
+    <h1 className='insert-data-h1'>{t('insertHeader')}</h1>
     <div className="insert-data-container">
       <Instructions />
       <div className="content-container">
         {metric && (
           <div className="metric-reference">
-            <h2>Metric: {metric.metricName}</h2>
+            <h2>{t('metric')}: {metric.metricName}</h2>
             <ul>
               {Object.entries(metric.columns).map(([columnName, columnType], idx) => (
                 <li key={idx}>{`${columnName}: ${columnType}`}</li>
@@ -59,10 +62,10 @@ const InsertData = () => {
             className="csv-textarea"
             value={csvData}
             onChange={handleCsvChange}
-            placeholder="Paste your CSV data here"
+            placeholder={t('textBox')}
           />
           <div className="button-container">
-            <button type="submit" className="submit-button">Insert data</button>
+            <button type="submit" className="submit-button">{t('insertButton')}</button>
           </div>
         </form>
       </div>

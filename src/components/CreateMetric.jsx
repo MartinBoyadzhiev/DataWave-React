@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './CreateMetric.css';
+import { useTranslation } from 'react-i18next';
 
 const CreateMetric = () => {
   const [metricName, setName] = useState('');
@@ -9,6 +10,8 @@ const CreateMetric = () => {
   const [primaryKeys, setPrimaryKeys] = useState([]);
   const [responseMessage, setResponseMessage] = useState(''); // State variable for response message
   const [validationError, setValidationError] = useState('');
+  const { t } = useTranslation();
+
 
   const handleAddColumn = () => {
     setColumns([...columns, { name: '', type: '' }]);
@@ -38,7 +41,7 @@ const CreateMetric = () => {
   const validateMetricName = (name) => {
     const alphanumericRegex = /^[a-z0-9]+$/i;
     if (!alphanumericRegex.test(name)) {
-      setValidationError('Metric name must be alphanumeric.');
+      setValidationError(t('validationError'));
       return false;
     }
     setValidationError('');
@@ -91,7 +94,7 @@ const CreateMetric = () => {
     <div className="create-metric-container">
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="metricName">Metric name: </label>
+          <label htmlFor="metricName">{t('metricName')} </label>
           <input
             type="text"
             id="metricName"
@@ -102,21 +105,21 @@ const CreateMetric = () => {
           {validationError && <p className="error-message">{validationError}</p>} {/* Render the validation error */}
         </div>
         <div className="form-container">
-          <label htmlFor="valueType">Value type: </label>
+          <label htmlFor="valueType">{t('valueType')} </label>
           <select  value={valueType} onChange={(e) => setValue(e.target.value)}>
-            <option value="">Select Value Type</option>
-            <option value="INTEGER">Integer</option>
-            <option value="FLOAT">Float</option>
-            <option value="STRING">String</option>
+            <option value="">{t('selectType')}</option>
+            <option value="INTEGER">{t('integer')}</option>
+            <option value="FLOAT">{t('float')}</option>
+            <option value="STRING">{t('string')}</option>
           </select>
         </div>
         <div className='custom-columns'>
-          <label>Custom Columns:</label>
+          <label>{t('customColumn')}</label>
           {columns.map((column, index) => (
             <div className="form-container" key={index} >
               <input
                 type="text"
-                placeholder="Name"
+                placeholder={t('customColumnPlaceholder')}
                 value={column.name}
                 onChange={(e) => handleColumnChange(index, 'name', e.target.value)}
                 required
@@ -125,21 +128,21 @@ const CreateMetric = () => {
                 value={column.type}
                 onChange={(e) => handleColumnChange(index, 'type', e.target.value)}
               >
-                <option value="">Select Column Type</option>
-                <option value="INTEGER">Integer</option>
-                <option value="FLOAT">Float</option>
-                <option value="STRING">String</option>
+                <option value="">{t('selectColumnType')}</option>
+                <option value="INTEGER">{t('integer')}</option>
+                <option value="FLOAT">{t('float')}</option>
+                <option value="STRING">{t('string')}</option>
               </select>              
               <button
                 type="button"
                 className="remove-button"
                 onClick={() => handleRemoveColumn(index)}
               >
-                Remove
+                {t('removeButton')}
               </button>
             </div>
           ))}
-          <button type="button" className="basic-button" onClick={handleAddColumn}>Add Column</button>
+          <button type="button" className="basic-button" onClick={handleAddColumn}>{t('addColumnButton')}</button>
         </div>
         <div className="primary-keys-container">
           <label>Primary Keys:</label>
@@ -157,7 +160,7 @@ const CreateMetric = () => {
           ))}
         </div>
         <div className="button-container">
-          <button type="submit" className="basic-button create">Create Metric</button>
+          <button type="submit" className="basic-button create">{t('createButton')}</button>
         </div>
       </form>
       {responseMessage && <p>{responseMessage}</p>} {/* Render the response message */}

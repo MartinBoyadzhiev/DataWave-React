@@ -6,6 +6,7 @@ import {
 	MDBInput, 
 	MDBBtn, 
 } from 'mdb-react-ui-kit'; 
+import { useTranslation } from 'react-i18next';
 
 function SignupPage() { 
 	const [email, setEmail] = useState(''); 
@@ -14,6 +15,7 @@ function SignupPage() {
 	const [role, setRole] = useState('ROLE_CUSTOMER');  
 	const [error, setError] = useState('');
 	const history = useNavigate();
+	const { t } = useTranslation();
 
 	const handleSignup = async () => { 
 		try { 
@@ -47,23 +49,23 @@ function SignupPage() {
 		<div className="auth-container">
 			<div className="auth-box">
 				<MDBContainer className="p-3">
-					<h2 className="auth-title">Sign Up</h2>
+					<h2 className="auth-title">{t('registration')}</h2>
 					{error && <p className="text-danger">{error}</p>}
-					<MDBInput className="auth-input" placeholder='Email Address' id='email' value={email} type='email'
+					<MDBInput className="auth-input" placeholder={t('email')} id='email' value={email} type='email'
 						onChange={(e) => setEmail(e.target.value)} />
-					<MDBInput className="auth-input" placeholder='Password' id='password' type='password' value={password}
+					<MDBInput className="auth-input" placeholder={t('password')} id='password' type='password' value={password}
 						onChange={(e) => setPassword(e.target.value)} />
-					<MDBInput className="auth-input" placeholder='Confirm Password' id='confirmPassword' type='password'
+					<MDBInput className="auth-input" placeholder={t('passwordConfirm')} id='confirmPassword' type='password'
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)} />
-					<label className="form-label mb-1">Role:</label>
+					<label className="form-label mb-1">{t('role')}</label>
 					<select className="form-select mb-4" value={role} onChange={(e) => setRole(e.target.value)}>
-						<option value="ROLE_USER">User</option>
-						<option value="ROLE_ADMIN">Admin</option>
+						<option value="ROLE_USER">{t('user')}</option>
+						<option value="ROLE_ADMIN">{t('admin')}</option>
 					</select>
-					<button className="auth-button btn-primary" onClick={handleSignup}>Sign Up</button>
+					<button className="auth-button btn-primary" onClick={handleSignup}>{t('registerButton')}</button>
 					<div className="auth-link">
-						<p>Already Register? <a href="/login">Login</a></p>
+						<p>{t('signinQ')} <a href="/login">{t('login')}</a></p>
 					</div>
 				</MDBContainer>
 			</div>
