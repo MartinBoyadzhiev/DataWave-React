@@ -17,16 +17,34 @@ function SignupPage() {
 	const history = useNavigate();
 	const { t } = useTranslation();
 
+	const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+    };
+
+    const validatePassword = (password) => {
+        const re = /^.{6,}$/;
+        return re.test(password);
+    };
+
 	const handleSignup = async () => { 
 		try { 
 			
 			if (!email || !password || !confirmPassword) { 
-				setError('Please fill in all fields.'); 
+				setError(t('emptyFieldError')); 
 				return; 
 			} 
+			if (!validateEmail(email)) {
+                setError(t('emailFormatError'));
+                return;
+            }
+			if (!validatePassword(password)) {
+                setError(t('passwordFormatError'));
+                return;
+            }
 
 			if (password !== confirmPassword) { 
-				throw new Error("Passwords do not match"); 
+				throw new Error(t('passwordMatchError')); 
 			} 
 
 			const response = await axios.post('http://localhost:8080/auth/signup', {  
@@ -58,11 +76,6 @@ function SignupPage() {
 					<MDBInput className="auth-input" placeholder={t('passwordConfirm')} id='confirmPassword' type='password'
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)} />
-					<label className="form-label mb-1">{t('role')}</label>
-					<select className="form-select mb-4" value={role} onChange={(e) => setRole(e.target.value)}>
-						<option value="ROLE_USER">{t('user')}</option>
-						<option value="ROLE_ADMIN">{t('admin')}</option>
-					</select>
 					<button className="auth-button btn-primary" onClick={handleSignup}>{t('registerButton')}</button>
 					<div className="auth-link">
 						<p>{t('signinQ')} <a href="/login">{t('login')}</a></p>

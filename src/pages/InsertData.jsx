@@ -30,7 +30,7 @@ const InsertData = () => {
             'Content-Type': 'application/json',
           },
         });
-        navigate('/admin');
+        navigate('/');
       } catch (error) {
         setError(t('insertError'));
         setShowErrorPopup(true);

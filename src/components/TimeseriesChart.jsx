@@ -44,7 +44,7 @@ const TimeSeriesChart = ({ data }) => {
   const chartData = {
     datasets: [
       {
-        label: 'BTC price',
+        label: 'Data',
         data: data,
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.1

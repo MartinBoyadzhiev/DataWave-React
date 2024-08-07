@@ -52,5 +52,13 @@
     "logoutQ": "Are you sure you want to log out?",
     "deleteMetricConfirmation": "Are you sure you want to delete metric \"{{metricName}}\"",
     "back": "Go back",
-    "insertError": "Error inserting data.\nPlease check the given instructions and try again."
+    "insertError": "Error inserting data.\nPlease check the given instructions and try again.",
+    "metricCreated": "Metric created successfully",
+    "metricCreationError": "Error creating metric.",
+    "columnNameValidationError": "Column name must be alphanumeric",
+    "columnValidationError": "Required field",
+    "emptyFieldError": "Please fill out all fields",
+    "emailFormatError": "Please enter a valid email address",
+    "passwordFormatError": "Password must be at least 6 characters long",
+    "passwordMatchError": "Passwords do not match"
 }

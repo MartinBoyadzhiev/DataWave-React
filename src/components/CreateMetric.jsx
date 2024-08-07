@@ -48,6 +48,24 @@ const CreateMetric = () => {
     return true;
   };
 
+
+  
+  const validateColumns = () => {
+    const alphanumericRegex = /^[a-z0-9]+$/i;
+    for (const column of columns) {
+      if (!column.name || !column.type) {
+        setValidationError(t('columnValidationError'));
+        return false;
+      }
+      if (!alphanumericRegex.test(column.name)) {
+        setValidationError(t('columnNameValidationError'));
+        return false;
+      }
+    }
+    setValidationError('');
+    return true;
+  };
+
   const handleMetricNameChange = (e) => {
     const { value } = e.target;
     setName(value);
@@ -57,7 +75,7 @@ const CreateMetric = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateMetricName(metricName)) {
+    if (!validateMetricName(metricName) || !validateColumns()) {
       return;
     }
 
@@ -71,7 +89,6 @@ const CreateMetric = () => {
       primaryKeys
     };
 
-
     const token = localStorage.getItem('jwtToken');
 
     try {
@@ -80,12 +97,21 @@ const CreateMetric = () => {
           'Authorization': `Bearer ${token}`
         }
       });
-      setResponseMessage(response.data.message);
+
+      if (response.status === 200) {
+        setResponseMessage(t('metricCreated'));
+        
+        setName('');
+        setValue('');
+        setColumns([{ name: '', type: '' }]);
+        setPrimaryKeys([]);
+      }
+      
     } catch (error) {
       if (error.response) {
-        setResponseMessage(error.response.data.message); // Set the error response message
+        setResponseMessage(error.response.data.message); 
       } else {
-        setResponseMessage('An error occurred while creating the metric.');
+        setResponseMessage(t('metricCreationError'));
       }
     }
   };
@@ -107,10 +133,9 @@ const CreateMetric = () => {
         <div className="form-container">
           <label htmlFor="valueType">{t('valueType')} </label>
           <select  value={valueType} onChange={(e) => setValue(e.target.value)}>
-            <option value="">{t('selectType')}</option>
+            <option value="" disabled>{t('selectType')}</option>
             <option value="INTEGER">{t('integer')}</option>
             <option value="FLOAT">{t('float')}</option>
-            <option value="STRING">{t('string')}</option>
           </select>
         </div>
         <div className='custom-columns'>
@@ -128,7 +153,7 @@ const CreateMetric = () => {
                 value={column.type}
                 onChange={(e) => handleColumnChange(index, 'type', e.target.value)}
               >
-                <option value="">{t('selectColumnType')}</option>
+                <option value="" disabled>{t('selectColumnType')}</option>
                 <option value="INTEGER">{t('integer')}</option>
                 <option value="FLOAT">{t('float')}</option>
                 <option value="STRING">{t('string')}</option>
